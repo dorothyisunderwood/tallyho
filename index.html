@@ -10,7 +10,7 @@
   
   <!-- Google Fonts -->
   
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong|Tilt Prism|Silkscreen|Notable">
       
 	<!-- Link to External CSS File -->
 	<link rel="stylesheet" href="styles.css">
@@ -62,11 +62,10 @@
 <input type="range" id="lineHeight" name="lineHeight" min="4" max="160" value="16">
 <br>
 
-<!-- Text Color Input -->
+<!-- Text Color Input --><!--
 <label for="textColor">Text Color:</label>
 <input type="color" id="textColor" name="textColor">
-<br>
-<br>
+<br>-->
 
 <!-- Print button -->
 <button type="button" id="printBtn">Print</button>
@@ -83,25 +82,38 @@
     <!-- Title Input -->
 <label for="titleInput">Title:</label>
 <input type="text" id="titleInput" name="titleInput">
-<br>
 
 <!-- Date Checkbox -->
-<label for="dateCheckbox">Show Date:</label> <input type="checkbox" id="dateCheckbox" name="dateCheckbox">
+<input class="checkbox-input" type="checkbox" id="dateCheckbox" name="dateCheckbox">
+<label class="checkbox-label for="dateCheckbox">Show Date</label> 
 <br>
 
-<!-- Repeat Text Slider -->
-<label for="repeatText">Repeat Text: <span id="repeatTextValue">1</span></label>
-<input type="range" id="repeatText" name="repeatText" min="1" max="200" value="1">
 <br>
+
 
 <!-- Textarea for User Text Input -->
 <label for="inputText">Enter Text or Code:</label>
 <br>
 <textarea id="inputText" name="inputText" rows="4" cols="50">The quick brown fox jumped over the lazy dog</textarea>
-<br>
 
+<br>
+<!-- Repeat Text Slider -->
+<label for="repeatText">Repeat Text: (<span id="repeatTextValue">1</span>)</label>
+<input type="range" id="repeatText" name="repeatText" min="1" max="200" value="1">
+
+
+<br>
 <!-- Button for Generating Random String -->
 <button type="button" id="randomStringBtn">Generate Random String</button>
+<br>
+
+<!-- Random string settings -->
+<input class="checkbox-input" type="checkbox" id="alphabetsOnly" name="alphabetsOnly">
+<label class="checkbox-label" for="alphabetsOnly">Alphabets Only</label>
+
+<input class="checkbox-input" type="checkbox" id="lowercaseOnly" name="lowercaseOnly">
+<label class="checkbox-label" for="lowercaseOnly">Lowercase Only</label>
+
 </fieldset>
 
 

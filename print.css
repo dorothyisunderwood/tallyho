@@ -1,0 +1,51 @@
+/* print.css */
+/* Printable Page Styling */
+
+@media print {
+    @page {
+        size: auto;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 30px;
+        margin-left: 34px;
+        word-break: break-all;
+
+
+        }
+
+}
+
+
+/* Output Area and Text Output Styling */
+#outputArea {
+    background-color: #FFFFFF;
+    padding: 10px;
+    display: block;
+}
+  
+#textOutput {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+  
+  
+  /* Output Title and Footer Styling */
+.textOutputTitle,
+.textOutputFooter {
+    font-family: Verdana, sans-serif;
+    text-align: center;
+}
+
+.textOutputTitle {
+    font-size: 48px;
+    padding-bottom: 30px; /* breathing space */
+}
+
+.textOutputFooter {
+    padding-top: 20px; /* breathing space */
+    font-size: 24px;
+}
+  
+  
+  
+  

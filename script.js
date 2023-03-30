@@ -9,23 +9,16 @@
 
 // TO ADD:
 // Margin adjustments
-// center printed block
-// random gen text - remove numbers, or all caps, all lowercase
-// tighten up the first page ux spacing a lot in left column
-// make print button bigger
-// show date checkbox align
-// estimate printed area and do a little warning? alert? when too big to print - best would be to have a coloured background for printable area. 
 // inline hidden tab for setting the title and footer font face/size
 // also to put this up on github 
-// how do i make it a working webpage on oggham.com?
 // check it in other browsers
-// what about the fonts? google fonts might work for widgets
+
 
 // Get elements
 const fontFamilyDropdown = document.getElementById("fontFamily");
 const fontSizeSlider = document.getElementById("fontSize");
 const fontSizeValue = document.getElementById("fontSizeValue");
-const textColor = document.getElementById("textColor");
+// const textColor = document.getElementById("textColor");
 const inputText = document.getElementById("inputText");
 const randomStringBtn = document.getElementById("randomStringBtn");
 const generatePdfBtn = document.getElementById("generatePdfBtn");
@@ -41,23 +34,55 @@ const footerOutput = document.getElementById("footer");
 const repeatTextSlider = document.getElementById("repeatText");
 const repeatTextValue = document.getElementById("repeatTextValue");
 const printBtn = document.getElementById("printBtn");
+const linkTag = document.querySelector('link[href^="https://fonts.googleapis.com/css"]');
+const fontFaces = ["Arial","Courier New","Times New Roman","Verdana"];
 
-// Font faces array
-const fontFaces = [
-  "Arial",
-  "Jenny Doodles",
-  "Welcome Home",
-  "Botani",
-  "Cats and Dogs",
-  "Verdana",
-  "Times New Roman",
-  "Courier New",
-];
+let alphabetsOnly = false;
+let lowercaseOnly = false;
+
+
+
+// Function to create and append font face options
+function createFontFaceOptions(fontFaces) {
+  for (const fontFace of fontFaces) {
+    const option = document.createElement("option");
+    option.value = fontFace;
+    option.textContent = fontFace;
+    fontFamilyDropdown.appendChild(option);
+  }
+}
+
+// Function to populate font faces
+function populateFontFaces() {
+  const linkTag = document.querySelector('link[href*="https://fonts.googleapis.com/css?family="]');
+  let fontFaces = [];
+
+  if (linkTag) {
+    // Step 2: Get the href attribute value
+    const hrefValue = linkTag.getAttribute('href');
+
+    // Step 3: Extract the font names from the href string
+    const fontNames = hrefValue.match(/family=([^&]+)/)[1].split('|');
+
+    // Step 4: Create an array of font names
+    fontFaces = fontNames.map(fontName => fontName.replace(/\+/g, ' ')).sort();
+  } else {
+    console.error('Google Fonts link tag not found');
+    fontFaces = ["Arial", "Courier New", "Times New Roman", "Verdana"];
+  }
+
+  createFontFaceOptions(fontFaces);
+}
+
+// Call populateFontFaces function to populate the dropdown
+populateFontFaces();
+
+
 
 // Function to update text output styles
 function updateTextOutputStyles() {
 	textOutput.style.fontSize = `${fontSizeSlider.value}px`;
-	textOutput.style.color = textColor.value;
+	// textOutput.style.color = textColor.value;
 	textOutput.style.fontFamily = fontFamilyDropdown.value;
 	textOutput.style.letterSpacing = `${letterSpacingSlider.value}px`;
 	textOutput.style.lineHeight = `${lineHeightSlider.value}px`;
@@ -92,7 +117,7 @@ dateCheckbox.addEventListener("change", () => {
 // Add event listeners to input fields
 fontFamilyDropdown.addEventListener("input", updateTextOutputStyles);
 fontSizeSlider.addEventListener("input", updateTextOutputStyles);
-textColor.addEventListener("input", updateTextOutputStyles);
+//  textColor.addEventListener("input", updateTextOutputStyles);
 letterSpacingSlider.addEventListener("input", updateTextOutputStyles);
 lineHeightSlider.addEventListener("input", updateTextOutputStyles);
 
@@ -101,7 +126,7 @@ printBtn.addEventListener("click", printOutputArea);
 
 // Add event listener to random string button
 randomStringBtn.addEventListener("click", () => {
-  inputText.value = generateRandomString(100); // Generate a random string of length 100
+  inputText.value = generateRandomString(100, alphabetsOnly, lowercaseOnly); // Generate a random string of length 100
   textOutput.textContent = inputText.value;
 });
 
@@ -120,12 +145,45 @@ repeatTextSlider.addEventListener("input", () => {
 });
 
 
+dateCheckbox.addEventListener("change", () => {
+  if (dateCheckbox.checked) {
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = today.toLocaleDateString(undefined, options);
+    footerOutput.textContent = formattedDate;
+  } else {
+    footerOutput.textContent = "";
+  }
+});
+
+
+// Update the checkbox values
+document.getElementById("alphabetsOnly").addEventListener("change", function (event) {
+  // Update the value of alphabetsOnly based on the checked state of the checkbox
+  alphabetsOnly = event.target.checked;
+});
+
+document.getElementById("lowercaseOnly").addEventListener("change", function (event) {
+  // Update the value of alphabetsOnly based on the checked state of the checkbox
+  lowercaseOnly = event.target.checked;
+});
+
+
+
 // USEFUL FUNCTIONS
 
+
 // Function to generate a random string
-function generateRandomString(length) {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+function generateRandomString(length, alphabetsOnly, lowercaseOnly) {
+  console.log("Alphabetsonly is: " + alphabetsOnly + " Lowercaseonly is: " +lowercaseOnly)
+  const alphaCharactersLower = "abcdefghijklmnopqrstuvwxyz";
+  const alphaCharactersUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numericCharacters = "0123456789";
+  const characters = alphabetsOnly ? (lowercaseOnly ? alphaCharactersLower : alphaCharactersLower + alphaCharactersUpper)
+                    : (lowercaseOnly ? alphaCharactersLower + numericCharacters: alphaCharactersLower + alphaCharactersLower + alphaCharactersUpper + numericCharacters);
+
   let result = "";
+
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
@@ -133,24 +191,9 @@ function generateRandomString(length) {
 }
 
 
-// Function to create and append font face options
-function createFontFaceOptions() {
-  for (const fontFace of fontFaces) {
-    const option = document.createElement("option");
-    option.value = fontFace;
-    option.textContent = fontFace;
 
-    // Set Arial as the default selected font
-    if (fontFace === "Arial") {
-      option.selected = true;
-    }
 
-    fontFamilyDropdown.appendChild(option);
-  }
-}
 
-// Call createFontFaceOptions function to populate the dropdown
-createFontFaceOptions();
 
 
 // Function to repeat the entered text
@@ -168,63 +211,33 @@ function updateRepeatedText() {
 
 
 
-
 // Print outputArea only
 function printOutputArea() {
   // Create a new window
-  // XXX pass the title over for the window with prefix of Print: , else Print Tally Ho
+  const titleInput = document.getElementById("titleInput").value; 
   const printWindow = window.open("", "_blank");
+
+  // Set the new window's title
+  if (titleInput) {
+    printWindow.document.title = titleInput + " (Tally Ho Printable)";
+  } else {
+    printWindow.document.title = "Tally Ho Printable";
+  }
 
   // Get the outputArea content and styles
   const outputArea = document.getElementById("outputArea").cloneNode(true);
-  const styles = `
-    /* Add your styles.css content here */
 
- /* Output Area and Text Output Styling */
-#outputArea {
-  background-color: #FFFFFF;
-  padding: 10px;
-  display: block;
-}
+  // Get the base URL of the original page
+  const baseURL = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
 
-#textOutput {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-/* Output Title and Footer Styling */
-.textOutputTitle,
-.textOutputFooter {
-  font-family: Verdana, sans-serif;
-  text-align: center;
-}
-
-.textOutputTitle {
-	font-size: 48px;
-}
-
-.textOutputFooter {
-  font-size: 36px;
-}
-
- @media print {
-      @page {
-        size: auto;
-		margin-top: 0;
-		margin-bottom: 0;
-		margin-right: 30px;
-		margin-left: 34px;
-        }
-    }
-    
-  `;
-
-  // Create a new style tag
-  const styleTag = document.createElement("style");
-  styleTag.innerHTML = styles;
+  // Create a new link tag for the styles.css file
+  const linkTag = document.createElement("link");
+  linkTag.href = baseURL + "print.css";
+  linkTag.rel = "stylesheet";
+  linkTag.type = "text/css";
 
   // Append the necessary elements to the new window
-  printWindow.document.head.appendChild(styleTag);
+  printWindow.document.head.appendChild(linkTag);
   printWindow.document.body.appendChild(outputArea);
 
   // Invoke the print function and close the window after printing
@@ -233,4 +246,6 @@ function printOutputArea() {
     printWindow.close();
   });
 }
+
+
 
