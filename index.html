@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Page Title -->
+  <title>Tally Ho! Generate a tally sheet</title>
+  
+  
+  <!-- Google Fonts -->
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
+      
+	<!-- Link to External CSS File -->
+	<link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<body>
+  <!-- Container -->
+  <div class="container">
+    <!-- Left Column -->
+    <div class="left-column">
+      <div class="section section-1">
+        <!-- Add your content here -->
+        
+ <header>
+    <h3>Tally Ho!</h3>
+  </header>
+  <!-- Main Content -->
+  <main>
+    <!-- Form for Text Attributes and Text Input -->
+    <form autocomplete="off">
+
+
+<!-- Fieldset for Text Attributes -->
+<fieldset>
+<legend>Text Attributes</legend>
+
+<!-- Font Face Input -->
+<!-- Font Family Dropdown -->
+<label for="fontFamily">Font Family:</label>
+<select id="fontFamily">
+<!-- Options will be added by JavaScript -->
+</select>
+<br>
+
+<!-- Font Size Input -->
+<label for="fontSize">Font Size:    (<span id="fontSizeValue">24</span>px)</label>
+<input type="range" id="fontSize" name="fontSize" min="8" max="240" value="24">
+<br>
+
+<!-- Letter-spacing Input -->
+<label for="letterSpacing">Letter Spacing:  (<span id="letterSpacingValue">0</span>px)</label>
+<input type="range" id="letterSpacing" name="letterSpacing" min="-10" max="200" value="0">
+<br>
+
+<!-- Line-height Input -->
+<label for="lineHeight">Line-height:  (<span id="lineHeightValue">16</span>px)</label>
+<input type="range" id="lineHeight" name="lineHeight" min="4" max="160" value="16">
+<br>
+
+<!-- Text Color Input -->
+<label for="textColor">Text Color:</label>
+<input type="color" id="textColor" name="textColor">
+<br>
+<br>
+
+<!-- Print button -->
+<button type="button" id="printBtn">Print</button>
+
+    
+      </div>
+      <div class="section section-2">
+        <!-- Add your content here -->
+        
+ <!-- Fieldset for Text Input -->
+  <fieldset>
+    <legend>Text Input</legend>
+    
+    <!-- Title Input -->
+<label for="titleInput">Title:</label>
+<input type="text" id="titleInput" name="titleInput">
+<br>
+
+<!-- Date Checkbox -->
+<label for="dateCheckbox">Show Date:</label> <input type="checkbox" id="dateCheckbox" name="dateCheckbox">
+<br>
+
+<!-- Repeat Text Slider -->
+<label for="repeatText">Repeat Text: <span id="repeatTextValue">1</span></label>
+<input type="range" id="repeatText" name="repeatText" min="1" max="200" value="1">
+<br>
+
+<!-- Textarea for User Text Input -->
+<label for="inputText">Enter Text or Code:</label>
+<br>
+<textarea id="inputText" name="inputText" rows="4" cols="50">The quick brown fox jumped over the lazy dog</textarea>
+<br>
+
+<!-- Button for Generating Random String -->
+<button type="button" id="randomStringBtn">Generate Random String</button>
+</fieldset>
+
+
+</form>        
+        
+      </div>
+    </div>
+    <!-- Right Column -->
+    <div class="right-column">
+      <!-- Add your content here -->
+      
+    
+<!-- Output Area -->
+<section>
+  <header>
+  </header>
+
+  <div id="outputArea" class="fixed-aspect-ratio">
+    <!-- Title -->
+    <pre class="textOutputTitle" id="title"></pre>
+    <!-- Contents -->
+    <div class="contents" id="contents">
+      <!-- Text Output with User-specified Styles -->
+      <pre id="textOutput">The quick brown fox jumped over the lazy dog</pre>
+    </div>
+    <!-- Footer -->
+    <pre class="textOutputFooter" id="footer"></pre>
+  </div>
+</section>
+
+    </div>
+  </div>
+
+  </main>
+  
+	<!-- Link to External JavaScript File -->
+	<script src="script.js"></script>
+</body>
+</html>

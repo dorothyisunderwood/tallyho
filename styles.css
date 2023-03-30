@@ -1,0 +1,151 @@
+/* styles.css */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F5F9F8;
+  color: #333;
+  line-height: 1.6;
+  padding: 10px;
+}
+
+
+/* Output Title and Footer Styling */
+.textOutputTitle,
+.textOutputFooter {
+  font-family: Verdana, sans-serif;
+  text-align: center;
+}
+
+.textOutputTitle {
+	font-size: 24px;
+	padding-bottom: 30px; /* breathing space */
+}
+
+.textOutputFooter {
+  padding-top: 20px; /* breathing space */
+  font-size: 16px;
+}
+
+
+/* Header Styling */
+header {
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Main Content Styling */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Form and Fieldset Styling */
+form {
+  margin-bottom: 10px;
+}
+
+fieldset {
+  border: 1px solid #C4D6D8;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+legend {
+  padding: 0 5px;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+/* Input and Textarea Styling */
+input,
+select,
+textarea {
+  display: block;
+  font-size: 16px;
+  padding: 2.5px;
+  width: 100%;
+  margin-bottom: 5px;
+  border: 1px solid #C4D6D8;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  color: #333;
+}
+
+/* Button Styling */
+button {
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #FFFFFF;
+  background-color: #48A48E;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #3B8C80;
+}
+
+/* Output Area and Text Output Styling */
+#outputArea {
+  background-color: #FFFFFF;
+  border: 1px solid #C4D6D8;
+  border-radius: 5px;
+  padding: 10px;
+  display: block;
+}
+
+#textOutput {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Container */
+.container {
+  display: flex;
+}
+
+/* Left Column */
+.left-column {
+  position: sticky;
+  top: 0;
+  width: 30%;
+  padding: 10px;
+}
+
+/* Left Column Sections */
+.section {
+  background-color: #DFF2E4;
+  border: 1px solid #C4D6D8;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Right Column */
+.right-column {
+  width: 70%;
+  padding: 10px;
+  background-color: #FFFFFF;
+  overflow-y: auto;
+}
+
+
+/* Fixed aspect ratio for output area */
+.fixed-aspect-ratio {
+	position: relative;
+	width: 100%;
+	word-break: break-all;
+}
+
+
