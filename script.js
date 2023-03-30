@@ -36,10 +36,10 @@ const repeatTextValue = document.getElementById("repeatTextValue");
 const printBtn = document.getElementById("printBtn");
 const linkTag = document.querySelector('link[href^="https://fonts.googleapis.com/css"]');
 const fontFaces = ["Arial","Courier New","Times New Roman","Verdana"];
+const fontFacesCustom = [];
 
 let alphabetsOnly = false;
 let lowercaseOnly = false;
-
 
 
 // Function to create and append font face options
@@ -50,32 +50,58 @@ function createFontFaceOptions(fontFaces) {
     option.textContent = fontFace;
     fontFamilyDropdown.appendChild(option);
   }
+  console.log("5. finish");
 }
 
-// Function to populate font faces
-function populateFontFaces() {
+
+// Function to populate fontFacesCustom with the custom fonts on the server
+function loadCustomFonts() {
+  const fontLinks = document.querySelectorAll('link[href*="webfonts/"]');
+  let fontFacesCustom = [];
+
+  fontLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    const fontPath = href.match(/webfonts\/([^/]+)/);
+    if (fontPath) {
+      fontFacesCustom.push(fontPath[1]);
+    }
+  });
+  console.log("2. Custom: " + fontFacesCustom);
+  return fontFacesCustom;
+}
+
+
+// Function to populate fontfaces for Google Fonts
+function loadGoogleFonts() {
   const linkTag = document.querySelector('link[href*="https://fonts.googleapis.com/css?family="]');
-  let fontFaces = [];
+  let fontFacesGoogle = [];
 
   if (linkTag) {
-    // Step 2: Get the href attribute value
     const hrefValue = linkTag.getAttribute('href');
-
-    // Step 3: Extract the font names from the href string
     const fontNames = hrefValue.match(/family=([^&]+)/)[1].split('|');
-
-    // Step 4: Create an array of font names
-    fontFaces = fontNames.map(fontName => fontName.replace(/\+/g, ' ')).sort();
+    fontFacesGoogle = fontNames.map(fontName => fontName.replace(/\+/g, ' ')).sort();
   } else {
     console.error('Google Fonts link tag not found');
-    fontFaces = ["Arial", "Courier New", "Times New Roman", "Verdana"];
   }
-
-  createFontFaceOptions(fontFaces);
+  console.log("3 google fonts");
+  return fontFacesGoogle;
 }
 
-// Call populateFontFaces function to populate the dropdown
-populateFontFaces();
+// Function to load fonts, merge and sort arrays
+function loadFonts() {
+  console.log("1 load fonts");
+  const fontFacesCustom = loadCustomFonts();
+  const fontFacesGoogle = loadGoogleFonts();
+  const mergedFontFaces = [...fontFaces, ...fontFacesCustom, ...fontFacesGoogle].sort((a, b) => {
+    return a.localeCompare(b, undefined, {sensitivity: 'base'});
+  });
+  console.log("4.");
+  createFontFaceOptions(mergedFontFaces);
+}
+
+
+// Call loadFonts to load custom and Google fonts, merge, sort and create options
+loadFonts();
 
 
 
@@ -187,6 +213,7 @@ function generateRandomString(length, alphabetsOnly, lowercaseOnly) {
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
+  console.log("roll da dice baby!");
   return result;
 }
 
@@ -227,17 +254,38 @@ function printOutputArea() {
   // Get the outputArea content and styles
   const outputArea = document.getElementById("outputArea").cloneNode(true);
 
-  // Get the base URL of the original page
+
+  // Create a new link tag for the print.css file
   const baseURL = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
+  const linkTagPrint = document.createElement("link");
+  linkTagPrint.href = baseURL + "print.css";
+  linkTagPrint.rel = "stylesheet";
+  linkTagPrint.type = "text/css";
 
-  // Create a new link tag for the styles.css file
-  const linkTag = document.createElement("link");
-  linkTag.href = baseURL + "print.css";
-  linkTag.rel = "stylesheet";
-  linkTag.type = "text/css";
+  
+  // Get all the other font stylesheets to pass to print (id="passToPrint")
+  const allCssStylesheetsLinks = document.getElementsByClassName("passToPrint");
 
-  // Append the necessary elements to the new window
-  printWindow.document.head.appendChild(linkTag);
+
+  // looping through each stylesheet
+  // and checking if there is href property in each item
+  for (let i = 0; i < allCssStylesheetsLinks.length; i++) {
+    if (allCssStylesheetsLinks[i].href) {
+
+      // Build the new linkTagPrint to send over
+      const linkTagPrintFont = document.createElement("link");
+      linkTagPrintFont.href = allCssStylesheetsLinks[i].href
+      linkTagPrintFont.rel = "stylesheet";
+      linkTagPrintFont.type = "text/css";
+    
+      // Append it to the new window
+      printWindow.document.head.appendChild(linkTagPrintFont);
+
+    }
+  }
+
+  // Append the other elements to the new window
+  printWindow.document.head.appendChild(linkTagPrint);
   printWindow.document.body.appendChild(outputArea);
 
   // Invoke the print function and close the window after printing
@@ -245,7 +293,6 @@ function printOutputArea() {
   printWindow.addEventListener("afterprint", () => {
     printWindow.close();
   });
+
+
 }
-
-
-

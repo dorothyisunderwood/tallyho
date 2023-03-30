@@ -93,7 +93,11 @@ textarea {
   margin-bottom: 0;
 }
 
+.credits {
+  display: inline-block;
+  margin-left: 14px;
 
+}
 
 /* Button Styling */
 button {
