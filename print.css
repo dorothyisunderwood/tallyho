@@ -7,7 +7,7 @@
         margin-top: 0;
         margin-bottom: 0;
         margin-right: 30px;
-        margin-left: 34px;
+        margin-left: 40px;
         word-break: break-all;
 
 
@@ -19,7 +19,7 @@
 /* Output Area and Text Output Styling */
 #outputArea {
     background-color: #FFFFFF;
-    padding: 10px;
+    padding: 0px;
     display: block;
 }
   
@@ -38,11 +38,11 @@
 
 .textOutputTitle {
     font-size: 48px;
-    padding-bottom: 30px; /* breathing space */
+    padding-bottom: 0px; /* breathing space */
 }
 
 .textOutputFooter {
-    padding-top: 20px; /* breathing space */
+    padding-top: 10px; /* breathing space */
     font-size: 24px;
 }
   

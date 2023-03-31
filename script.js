@@ -1,18 +1,5 @@
 // script.js
 
-// This is for Tally Ho, a browser-based generator of tally marker printable sheets. 
-// Basically so I can print nicely formatted pages of little pictures to colour in as I complete tasks.
-// Yes, I have ADHD.
-// Yes, I did this instead of my actual todo list.
-// This was done with ChatGPT 4 and a lot of googling.
-
-
-// TO ADD:
-// Margin adjustments
-// inline hidden tab for setting the title and footer font face/size
-// also to put this up on github 
-// check it in other browsers
-
 
 // Get elements
 const fontFamilyDropdown = document.getElementById("fontFamily");
